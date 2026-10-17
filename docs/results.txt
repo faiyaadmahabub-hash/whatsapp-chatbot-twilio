@@ -1,0 +1,7 @@
+POST /whatsapp Body='hello': HTTP 200: 'Hello! I am your WhatsApp bot.'
+POST /whatsapp Body='HELP': HTTP 200: 'Available commands:\n- hello\n- info\n- bye'
+POST /whatsapp Body='info': HTTP 200: 'This is a simple WhatsApp chatbot built from scratch.'
+POST /whatsapp Body='bye': HTTP 200: 'Goodbye.'
+POST /whatsapp Body='unknown': HTTP 200: "Command not recognized. Type 'help'."
+POST /whatsapp Body=None: HTTP 200: "Command not recognized. Type 'help'."
+PASS: 3 tests, including five keyword/fallback subcases and missing Body; GET rejected with 405.

@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/whatsapp", methods=["POST"])
 def whatsapp_reply():
-    incoming_msg = request.form.get("Body").lower()
+    incoming_msg = request.form.get("Body", "").lower()
     resp = MessagingResponse()
     msg = resp.message()
 
