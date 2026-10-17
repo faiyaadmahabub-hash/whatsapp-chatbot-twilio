@@ -195,7 +195,7 @@ app = Flask(__name__)
 
 @app.route("/whatsapp", methods=["POST"])
 def whatsapp_reply():
-    incoming_msg = request.form.get("Body").lower()   # text the user sent
+    incoming_msg = request.form.get("Body", "").lower()   # text the user sent
     resp = MessagingResponse()                         # TwiML container
     msg = resp.message()                               # one outgoing message
 
@@ -253,11 +253,11 @@ Ideas for next steps: menu buttons, session state per phone number (`request.for
 ## Limitations and next steps
 
 - **No request validation.** Use Twilio's `RequestValidator` with your Auth Token to confirm that each request genuinely comes from Twilio.
-- **Possible crash on empty input.** `request.form.get("Body")` returns `None` when the field is missing (for example a media-only message or a stray request), and `.lower()` would then raise an error. A default of `""` avoids it.
+- **Missing input handled in the current version.** `request.form.get("Body")` returns `None` when the field is missing (for example a media-only message or a stray request), and formerly caused an error. The current code supplies `""` and returns the fallback; regression tests cover this.
 - **Keyword order matters.** `"hello, can you help"` is answered with the hello reply because `hello` is tested first. The `help` text also does not list `help` itself.
 - **Sandbox only.** The Twilio Sandbox is for testing; every user must join with the code first. A production bot needs an approved WhatsApp Business sender.
 - **Development server.** `app.run()` is Flask's built-in server. Use Gunicorn or similar when deploying, and a stable host instead of ngrok.
-- **No tests, logging or persistence.**
+- **Local webhook regression tests are now included.** Logging and persistence remain unimplemented.
 
 ## Publication copy
 
